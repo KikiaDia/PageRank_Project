@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, sum as sum_col
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType
+import sys
 
 def compute_pagerank(input_file, output_file, max_iterations=10, damping_factor=0.85):
     # Créez une session Spark
@@ -51,5 +52,14 @@ def compute_pagerank(input_file, output_file, max_iterations=10, damping_factor=
     # Arrêter la session Spark
     spark.stop()
 
-# Exemple d'utilisation de la fonction
-compute_pagerank("small_page_links.nt", "output_pagerank")
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: pyspark_dframe.py <input_file> <output_file> [max_iterations] [damping_factor]")
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+    max_iterations = int(sys.argv[3]) if len(sys.argv) > 3 else 10
+    damping_factor = float(sys.argv[4]) if len(sys.argv) > 4 else 0.85
+
+    compute_pagerank(input_file, output_file, max_iterations, damping_factor)
