@@ -10,7 +10,10 @@ INPUT_FILE="gs://public_lddm_data/small_page_links.nt"
 OUTPUT_DIR="${BUCKET}/out/pagerank_data_1"
 ITERATIONS=10
 DAMPING_FACTOR=0.85
-NUM_WORKERS=2
+NUM_WORKERS=0 # 1 Noeud
+#NUM_WORKERS=1 # 2 Noeud
+#NUM_WORKERS=3 # 4 Noeud
+
 
 echo "Starting PageRank processing script"
 
@@ -24,16 +27,13 @@ gcloud dataproc clusters create ${CLUSTER_NAME} \
     --enable-component-gateway \
     --region ${REGION} \
     --zone ${ZONE} \
-    --master-machine-type n1-highmem-4 \
+    --master-machine-type n1-standard-4 \
     --master-boot-disk-size 500 \
     --num-workers ${NUM_WORKERS} \
-    --worker-machine-type n1-highmem-4 \
+    --worker-machine-type n1-standard-4 \
     --worker-boot-disk-size 500 \
     --image-version 2.0-debian10 \
     --project ${PROJECT}
-
-
-
 
 
 
