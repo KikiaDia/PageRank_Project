@@ -1,55 +1,61 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, sum as sum_col
+from pyspark.sql.functions import col, sum as sum_col, concat, lit
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType
 import sys
 
 def compute_pagerank(input_file, output_file, max_iterations=10, damping_factor=0.85):
-    # Créez une session Spark
-    spark = SparkSession.builder.appName("PageRankExample").getOrCreate()
+    # Create a Spark session with adjusted memory settings
+    spark = SparkSession.builder \
+        .appName("PageRankExample") \
+        .config("spark.executor.memory", "4g") \
+        .config("spark.driver.memory", "4g") \
+        .getOrCreate()
 
-    # Définir le schéma des données
+    # Define the schema of the data
     schema = StructType([
         StructField("source", StringType(), nullable=True),
         StructField("predicate", StringType(), nullable=True),
         StructField("target", StringType(), nullable=True)
     ])
 
-    # Charger les données à partir du fichier
-    data = spark.read.option("delimiter", " ").csv(input_file, header=False, schema=schema)
+    # Load the data directly from the input file
+    data = spark.read.csv(input_file, header=False, schema=schema, sep=" ")
 
-    # Calculer le nombre de liens sortants pour chaque page
+    # Calculate the number of outgoing links for each page
     outdegrees = data.groupBy("source").count().withColumnRenamed("source", "page").withColumnRenamed("count", "outDegree")
 
-    # Initialisation du PageRank en attribuant à chaque page une valeur de départ de 1.0
-    pagerank = outdegrees.withColumn("pagerank", col("outDegree").cast(DoubleType()) * 0 + 1.0)
+    # Initialize PageRank by assigning each page a starting value of 1.0
+    pagerank = outdegrees.withColumn("pagerank", lit(1.0))
 
-    # Créer un DataFrame des liens
+    # Create a DataFrame of links
     links = data.select("source", "target").distinct()
 
-    # Itérations de PageRank
+    # PageRank iterations
     for i in range(max_iterations):
-        # Calculer les contributions de PageRank
+        # Calculate PageRank contributions
         contributions = links.join(pagerank, links.source == pagerank.page) \
             .withColumn("contribution", col("pagerank") / col("outDegree"))
 
-        # Agréger les contributions par page cible
+        # Aggregate contributions by target page
         aggregated = contributions.groupBy("target") \
             .agg(sum_col("contribution").alias("sum_contributions"))
 
-        # Calculer le nouveau PageRank
+        # Calculate new PageRank
         new_pagerank = aggregated.withColumnRenamed("target", "page") \
             .withColumn("pagerank", (1 - damping_factor) + damping_factor * col("sum_contributions"))
 
-        # Mettre à jour le PageRank
+        # Update PageRank
         pagerank = new_pagerank.join(outdegrees, "page", "outer").na.fill(0)
 
-    # Sauvegarder le DataFrame PageRank final dans un fichier
-    pagerank.select("page", "pagerank").write.csv(output_file, header=True, mode="overwrite")
+    # Save the final PageRank DataFrame to a compressed CSV file
+    pagerank.select(
+        concat(col("page"), lit(","), col("pagerank").cast("string"))
+    ).write.csv(output_file, compression="bzip2")
 
-    # Afficher les 5 premières lignes pour vérification
+    # Display the top 5 rows for verification
     pagerank.select("page", "pagerank").orderBy(col("pagerank").desc()).show(5, truncate=False)
 
-    # Arrêter la session Spark
+    # Stop the Spark session
     spark.stop()
 
 if __name__ == "__main__":
