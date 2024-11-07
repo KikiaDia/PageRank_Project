@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, sum as sum_col, regexp_extract
+from pyspark.sql.functions import col, sum as sum_col, regexp_extract, concat, lit
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType
 import sys
 
@@ -51,11 +51,14 @@ def compute_pagerank_partion(input_file, output_file, max_iterations=10, damping
     pagerank_with_url_info = pagerank.join(links, pagerank.page == links.source, "left_outer") \
         .select(pagerank.page, pagerank.pagerank, links.domain, links.protocol)
 
-    # Sauvegarder le DataFrame PageRank final dans un fichier, partitionné par domaine et protocole
-    pagerank_with_url_info.write.partitionBy("domain", "protocol") \
-        .option("header", "true") \
-        .mode("overwrite") \
-        .csv(output_file)
+    # Convertir le DataFrame en RDD pour utiliser saveAsTextFile
+    ranks = pagerank_with_url_info.select(
+        concat(col("page"), lit(","), col("pagerank").cast("string"), 
+               lit(","), col("domain"), lit(","), col("protocol"))
+    ).rdd.map(lambda x: x[0])
+
+    # Sauvegarder le RDD PageRank final dans un fichier
+    ranks.saveAsTextFile(output_file)
 
     # Afficher les 5 premières lignes pour vérification
     pagerank_with_url_info.select("page", "pagerank", "domain", "protocol") \
