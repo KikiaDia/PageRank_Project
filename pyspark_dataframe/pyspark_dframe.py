@@ -7,8 +7,6 @@ def compute_pagerank(input_file, output_file, max_iterations=10, damping_factor=
     # Create a Spark session with adjusted memory settings
     spark = SparkSession.builder \
         .appName("PageRankExample") \
-        .config("spark.executor.memory", "4g") \
-        .config("spark.driver.memory", "4g") \
         .getOrCreate()
 
     # Define the schema of the data
