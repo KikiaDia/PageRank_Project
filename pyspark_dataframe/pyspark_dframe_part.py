@@ -1,76 +1,76 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, sum as sum_col, regexp_extract, concat, lit
+from pyspark.sql.functions import col, sum as sum_col, concat, lit, regexp_extract, when
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType
 import sys
 
-def compute_pagerank_partion(input_file, output_file, max_iterations=10, damping_factor=0.85):
-    # Créez une session Spark
-    spark = SparkSession.builder.appName("PageRankExample").getOrCreate()
+def compute_pagerank_partition(input_file, output_file, max_iterations=10, damping_factor=0.85):
+    # Create a Spark session
+    spark = SparkSession.builder.appName("PageRankPartitioned").getOrCreate()
 
-    # Définir le schéma des données
+    # Define the schema of the data
     schema = StructType([
         StructField("source", StringType(), nullable=True),
         StructField("predicate", StringType(), nullable=True),
         StructField("target", StringType(), nullable=True)
     ])
 
-    # Charger les données à partir du fichier
-    data = spark.read.option("delimiter", " ").csv(input_file, header=False, schema=schema)
+    # Load the data directly from the input file
+    data = spark.read.csv(input_file, header=False, schema=schema, sep=" ")
 
-    # Extraire le domaine et le protocole des URLs
+    # Extract domain and protocol from URLs
     data = data.withColumn("domain", regexp_extract(col("source"), "^(?:https?:\/\/)?(?:www\.)?([^\/]+)", 1))
     data = data.withColumn("protocol", regexp_extract(col("source"), "^(https?):\/\/", 1))
 
-    # Calculer le nombre de liens sortants pour chaque page
+    # Calculate the number of outgoing links for each page
     outdegrees = data.groupBy("source").count().withColumnRenamed("source", "page").withColumnRenamed("count", "outDegree")
 
-    # Initialisation du PageRank en attribuant à chaque page une valeur de départ de 1.0
-    pagerank = outdegrees.withColumn("pagerank", col("outDegree").cast(DoubleType()) * 0 + 1.0)
+    # Initialize PageRank by assigning each page a starting value of 1.0
+    pagerank = outdegrees.withColumn("pagerank", lit(1.0))
 
-    # Créer un DataFrame des liens
-    links = data.select("source", "target", "domain", "protocol").distinct()
+    # Create a DataFrame of links
+    links = data.select("source", "target").distinct()
 
-    # Itérations de PageRank
+    # PageRank iterations
     for i in range(max_iterations):
-        # Calculer les contributions de PageRank
+        # Calculate PageRank contributions
         contributions = links.join(pagerank, links.source == pagerank.page) \
             .withColumn("contribution", col("pagerank") / col("outDegree"))
 
-        # Agréger les contributions par page cible
+        # Aggregate contributions by target page
         aggregated = contributions.groupBy("target") \
             .agg(sum_col("contribution").alias("sum_contributions"))
 
-        # Calculer le nouveau PageRank
+        # Calculate new PageRank
         new_pagerank = aggregated.withColumnRenamed("target", "page") \
-            .withColumn("pagerank", (1 - damping_factor) + damping_factor * col("sum_contributions"))
+            .withColumn("pagerank", 
+                lit(1 - damping_factor) + damping_factor * when(col("sum_contributions").isNotNull(), col("sum_contributions")).otherwise(0))
 
-        # Mettre à jour le PageRank
+        # Update PageRank
         pagerank = new_pagerank.join(outdegrees, "page", "outer").na.fill(0)
 
-    # Ajouter les colonnes domain et protocol au DataFrame final
-    pagerank_with_url_info = pagerank.join(links, pagerank.page == links.source, "left_outer") \
-        .select(pagerank.page, pagerank.pagerank, links.domain, links.protocol)
+    # Add domain and protocol information to final DataFrame
+    pagerank_with_url_info = pagerank.join(data, pagerank.page == data.source, "left_outer") \
+        .select(pagerank.page, pagerank.pagerank, data.domain, data.protocol) \
+        .distinct()
 
-    # Convertir le DataFrame en RDD pour utiliser saveAsTextFile
-    ranks = pagerank_with_url_info.select(
-        concat(col("page"), lit(","), col("pagerank").cast("string"), 
-               lit(","), col("domain"), lit(","), col("protocol"))
-    ).rdd.map(lambda x: x[0])
+    # Save the final PageRank DataFrame to a file, partitioned by domain and protocol
+    pagerank_with_url_info.write \
+        .partitionBy("domain", "protocol") \
+        .mode("overwrite") \
+        .csv(output_file)
 
-    # Sauvegarder le RDD PageRank final dans un fichier
-    ranks.saveAsTextFile(output_file)
-
-    # Afficher les 5 premières lignes pour vérification
-    pagerank_with_url_info.select("page", "pagerank", "domain", "protocol") \
+    # Display the top 5 rows for verification
+    print("\nTop 5 pages by PageRank:")
+    pagerank_with_url_info.select("page", "pagerank") \
         .orderBy(col("pagerank").desc()) \
         .show(5, truncate=False)
 
-    # Arrêter la session Spark
+    # Stop the Spark session
     spark.stop()
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: pyspark_dframe.py <input_file> <output_file> [max_iterations] [damping_factor]")
+        print("Usage: pyspark_dframe_part.py <input_file> <output_file> [max_iterations] [damping_factor]")
         sys.exit(1)
 
     input_file = sys.argv[1]
@@ -78,4 +78,4 @@ if __name__ == "__main__":
     max_iterations = int(sys.argv[3]) if len(sys.argv) > 3 else 10
     damping_factor = float(sys.argv[4]) if len(sys.argv) > 4 else 0.85
 
-    compute_pagerank_partion(input_file, output_file, max_iterations, damping_factor)
+    compute_pagerank_partition(input_file, output_file, max_iterations, damping_factor)
