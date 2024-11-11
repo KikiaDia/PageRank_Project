@@ -1,6 +1,9 @@
- PySpark DataFrame
 
-Temps d'exécution : 2893 secondes(48 min 10 sec)
+ #########################################  PySpark DataFrame #############################################
+ 
+  ****************Sans partition********************
+
+Temps d'exécution : 48 min 10 sec
 Nombre de nœuds : 2
 
 +-----------------------------------------------------------------------+------------------+
@@ -14,7 +17,7 @@ Nombre de nœuds : 2
 +-----------------------------------------------------------------------+------------------+
 
 
-Temps d'exécution : 1953 secondes(32 min 30 sec)
+Temps d'exécution : 32 min 30 sec
 Nombre de nœuds : 4
 +-----------------------------------------------------------------------+------------------+
 |page                                                                   |pagerank          |
@@ -25,3 +28,34 @@ Nombre de nœuds : 4
 |<http://dbpedia.org/resource/France>                                   |1949.2770799440855|
 |<http://dbpedia.org/resource/United_Kingdom>                           |1862.2523120334035|
 +-----------------------------------------------------------------------+------------------+
+
+
+  **************** Avec Partition ********************
+Temps d'exécution : 32 min 26 sec
+Nombre de nœuds : 2
+
++-----------------------------------------------------------------------+------------------+
+|page                                                                   |pagerank          |
++-----------------------------------------------------------------------+------------------+
+|<http://dbpedia.org/resource/Living_people>                            |31001.24788987922 |
+|<http://dbpedia.org/resource/United_States>                            |4969.822795932627 |
+|<http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29>|4080.2517530433547|
+|<http://dbpedia.org/resource/France>                                   |1949.2770799440863|
+|<http://dbpedia.org/resource/United_Kingdom>                           |1862.2523120334024|
++-----------------------------------------------------------------------+------------------+
+
+
+Temps d'exécution : 20 min 8 sec
+Nombre de nœuds : 4
++-----------------------------------------------------------------------+------------------+
+|page                                                                   |pagerank          |
++-----------------------------------------------------------------------+------------------+
+|<http://dbpedia.org/resource/Living_people>                            |31001.24788987923 |
+|<http://dbpedia.org/resource/United_States>                            |4969.822795932627 |
+|<http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29>|4080.2517530433547|
+|<http://dbpedia.org/resource/France>                                   |1949.2770799440866|
+|<http://dbpedia.org/resource/United_Kingdom>                           |1862.2523120334026|
++-----------------------------------------------------------------------+------------------+
+
+
+######################################### PySpark RDD ####################################################
