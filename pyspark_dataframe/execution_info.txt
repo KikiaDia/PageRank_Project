@@ -59,3 +59,45 @@ Nombre de nœuds : 4
 
 
 ######################################### PySpark RDD ####################################################
+
+  ****************Sans partition********************
+  
+  
+  
+  
+  
+  
+  
+ Temps d'exécution : 45 min 33 sec
+Nombre de nœuds : 2
+
+
+
++-----------------------------------------------------------------------+------------------+
+|Page                                                                  |PageRank         |
++-----------------------------------------------------------------------+------------------+
+|<http://dbpedia.org/resource/Living_people>                           |38525.85646983932|
+|<http://dbpedia.org/resource/United_States>                           |7267.180298577935|
+|<http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29>|4666.779196943532|
+|<http://dbpedia.org/resource/United_Kingdom>                          |2853.391435395845|
+|<http://dbpedia.org/resource/France>                                  |2764.9960745274293|
++-----------------------------------------------------------------------+------------------+
+
+
+
+Temps d'exécution : 24 min 22 sec
+Nombre de nœuds : 4
+
++--------------------------------------------------------------------+------------------+
+|Page                                                               |PageRank         |
++--------------------------------------------------------------------+------------------+
+|<http://dbpedia.org/resource/Living_people>                        |38525.85646983944)|
+|<http://dbpedia.org/resource/United_States>                        |7267.180298577936)|
+|<http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29> |4666.779196943537)|
+|<http://dbpedia.org/resource/United_Kingdom>                       |2853.3914353958457)|
+|<http://dbpedia.org/resource/France>                               |2764.9960745274284)|
++-----------------------------------------------------------------------+------------------+
+
+
+
+  **************** Avec Partition ********************
