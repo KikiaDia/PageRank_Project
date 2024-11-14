@@ -1,15 +1,26 @@
 #!/bin/bash
 
-# Paramètres configurables
+# # Paramètres configurables
+# REGION="europe-west1"
+# ZONE="europe-west1-c"
+# PROJECT="projectpagerank"
+# CLUSTER_NAME="pagerank-cluster-1"
+# BUCKET="gs://bucket_projet_pagerank_lahad_kikia"
+# #INPUT_FILE="${BUCKET}/small_page_links.nt"
+# INPUT_FILE="${BUCKET}/page_links_en.nt.bz2"
+# OUTPUT_DIR="${BUCKET}/out/pagerank_data_1"
+# NUM_WORKERS=2
+
+# Variables générales
+PROJECT="kikia50727"
+BUCKET="gs://kikia_lahad_bucket"
 REGION="europe-west1"
 ZONE="europe-west1-c"
-PROJECT="projectpagerank"
-CLUSTER_NAME="pagerank-cluster-1"
-BUCKET="gs://bucket_projet_pagerank_lahad_kikia"
-#INPUT_FILE="${BUCKET}/small_page_links.nt"
+CLUSTER_NAME="pagerank-cluster-${NUM_WORKERS}-nodes"
 INPUT_FILE="${BUCKET}/page_links_en.nt.bz2"
 OUTPUT_DIR="${BUCKET}/out/pagerank_data_1"
 NUM_WORKERS=2
+
 
 echo "Démarrage du script de traitement PageRank"
 

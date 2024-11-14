@@ -1,0 +1,2 @@
+Temps d'exécution : 2606 secondes
+Nombre de nœuds : 2

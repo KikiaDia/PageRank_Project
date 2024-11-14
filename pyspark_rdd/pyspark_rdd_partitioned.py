@@ -98,6 +98,7 @@ from operator import add
 import re
 import hashlib
 import sys
+import time  # Importer la bibliothèque time
 
 # Création d'un accumulateur personnalisé pour suivre la progression
 class ProgressAccumulator(AccumulatorParam):
@@ -166,6 +167,9 @@ def main(input_file, output_file):
     num_partitions = spark.sparkContext.defaultParallelism
     print(f"Nombre de partitions : {num_partitions}")
 
+    # Démarrer le chronomètre
+    start_time = time.time()
+
     # Initialisation des liens et des voisins avec partitionnement
     print("Initialisation des liens...")
     links = initialize_links(input_file, num_partitions)
@@ -175,6 +179,33 @@ def main(input_file, output_file):
     print("Démarrage de l'algorithme PageRank...")
     ranks = run_pagerank(links, iterations=10, num_partitions=num_partitions)
     print("Algorithme PageRank terminé.")
+
+    # Arrêter le chronomètre
+    end_time = time.time()
+
+    # Calculer le temps d'exécution en secondes
+    execution_time = end_time - start_time
+    print(f"Execution time: {execution_time:.2f} seconds")
+
+    print("Sorting results...")
+    sorted_ranks = ranks.sortBy(lambda x: -x[1])
+
+    print("Collecting top 5 results...")
+    top_5 = sorted_ranks.take(5)
+
+    print("\nTop 5 PageRanks:")
+    for i, (link, rank) in enumerate(top_5, 1):
+        print(f"{i}. {link} has rank: {rank:.6f}")
+
+    print("\nFinding maximum rank...")
+    max_rank = sorted_ranks.first()
+    print(f"Page with highest PageRank: {max_rank[0]} (rank: {max_rank[1]:.6f})")
+
+    print(f"\nSaving results to {output_file}...")
+    sorted_ranks.saveAsTextFile(output_file)
+
+    print(f"Total iterations completed: {progress.value}")
+
 
     # Récupération des 5 meilleurs résultats
     # print("Récupération des meilleurs résultats...")
@@ -193,9 +224,9 @@ def main(input_file, output_file):
     # print(f"{max_rank[0]} avec un score de : {max_rank[1]}")
 
     # Sauvegarder tous les résultats
-    print(f"Sauvegarde des résultats dans {output_file}...")
-    ranks.saveAsTextFile(output_file)
-    print("Sauvegarde terminée.")
+    # print(f"Sauvegarde des résultats dans {output_file}...")
+    # ranks.saveAsTextFile(output_file)
+    # print("Sauvegarde terminée.")
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

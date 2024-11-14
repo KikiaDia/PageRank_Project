@@ -83,6 +83,7 @@ from operator import add
 import re
 import sys
 from pyspark import AccumulatorParam
+import time  # Importer la bibliothèque time
 
 # Initialisation de la session Spark avec configuration optimisée
 spark = SparkSession.builder \
@@ -133,11 +134,22 @@ def run_pagerank(links, iterations):
     return ranks
 
 def main(input_file, output_file):
+
+    # Démarrer le chronomètre
+    start_time = time.time()
+
     print("Initializing links...")
     links = initialize_links(input_file)
     
     print("Running PageRank algorithm...")
     ranks = run_pagerank(links, iterations=10)
+
+    # Arrêter le chronomètre
+    end_time = time.time()
+
+    # Calculer le temps d'exécution en secondes
+    execution_time = end_time - start_time
+    print(f"Execution time: {execution_time:.2f} seconds")
 
     print("Sorting results...")
     sorted_ranks = ranks.sortBy(lambda x: -x[1])

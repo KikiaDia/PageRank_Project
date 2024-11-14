@@ -1,0 +1,38 @@
+Exécution de pyspark_rdd.py
+Job [f077b87992844f5c9c1a2bad24ec3b11] submitted.
+Waiting for job output...
+24/11/11 20:42:44 INFO org.apache.spark.SparkEnv: Registering MapOutputTracker
+24/11/11 20:42:44 INFO org.apache.spark.SparkEnv: Registering BlockManagerMaster
+24/11/11 20:42:44 INFO org.apache.spark.SparkEnv: Registering BlockManagerMasterHeartbeat
+24/11/11 20:42:44 INFO org.apache.spark.SparkEnv: Registering OutputCommitCoordinator
+24/11/11 20:42:44 INFO org.sparkproject.jetty.util.log: Logging initialized @4472ms to org.sparkproject.jetty.util.log.Slf4jLog
+24/11/11 20:42:44 INFO org.sparkproject.jetty.server.Server: jetty-9.4.40.v20210413; built: 2021-04-13T20:42:42.668Z; git: b881a572662e1943a14ae12e7e1207989f218b74; jvm 1.8.0_422-b05
+24/11/11 20:42:44 INFO org.sparkproject.jetty.server.Server: Started @4600ms
+24/11/11 20:42:44 INFO org.sparkproject.jetty.server.AbstractConnector: Started ServerConnector@22475177{HTTP/1.1, (http/1.1)}{0.0.0.0:40713}
+24/11/11 20:42:46 INFO com.google.cloud.dataproc.DataprocSparkPlugin: Registered 128 driver metrics
+24/11/11 20:42:47 INFO org.apache.hadoop.yarn.client.RMProxy: Connecting to ResourceManager at pagerank-cluster-2-nodes-m/10.132.0.5:8032
+24/11/11 20:42:47 INFO org.apache.hadoop.yarn.client.AHSProxy: Connecting to Application History server at pagerank-cluster-2-nodes-m/10.132.0.5:10200
+24/11/11 20:42:48 INFO org.apache.hadoop.conf.Configuration: resource-types.xml not found
+24/11/11 20:42:48 INFO org.apache.hadoop.yarn.util.resource.ResourceUtils: Unable to find 'resource-types.xml'.
+24/11/11 20:42:50 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl: Submitted application application_1731357703075_0001
+24/11/11 20:42:51 INFO org.apache.hadoop.yarn.client.RMProxy: Connecting to ResourceManager at pagerank-cluster-2-nodes-m/10.132.0.5:8030
+24/11/11 20:42:53 INFO com.google.cloud.hadoop.repackaged.gcs.com.google.cloud.hadoop.gcsio.GoogleCloudStorageImpl: Ignoring exception of type GoogleJsonResponseException; verified object already exists with desired state.
+24/11/11 20:42:53 INFO com.google.cloud.hadoop.fs.gcs.GhfsStorageStatistics: Detected potential high latency for operation op_create. latencyMs=564; previousMaxLatencyMs=0; operationCount=1; context=gs://dataproc-temp-europe-west1-660708907290-2frgxbmu/209992d7-b248-41b3-93e3-835e63646fef/spark-job-history/application_1731357703075_0001.inprogress
+
+
+Command killed by keyboard interrupt
+
+Exécution de pyspark_rdd.py
+ERROR: (gcloud.dataproc.jobs.submit.pyspark) unrecognized arguments:
+  spark.executor.cores=4,
+  spark.driver.memory=8g,
+  spark.driver.cores=4,
+  spark.hadoop.fs.gs.implicit.dir.repair.enable=false,
+  spark.hadoop.fs.gs.requester.pays.mode=auto
+  To search the help text of gcloud commands, run:
+  gcloud help -- SEARCH_TERMS
+
+real	0m1.025s
+user	0m0.846s
+sys	0m0.158s
+
