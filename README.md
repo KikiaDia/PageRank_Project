@@ -14,7 +14,49 @@ Chaque implémentation a été testée avec et sans partitionnement d'URL (comme
   - 2 nœuds
   - 4 nœuds
   - Mêmes spécifications matérielles (CPU/RAM) maintenues sur tous les nœuds pour des résultats comparables
-
+## Structure du Projet
+```plaintext
+PageRank_Project/
+├── pyspark_dataframe/
+│   ├── pyspark_dframe_part.py            # Implémentation DataFrame avec partitionnement
+│   ├── pyspark_dframe.py                 # Implémentation DataFrame sans partitionnement
+│   ├── Script_pyspark_dframe_part.sh     # Script exécution DataFrame avec partitionnement
+│   └── Script_pyspark_dframe.sh          # Script exécution DataFrame sans partitionnement
+├── pyspark_rdd/
+│   ├── pyspark_rdd_partitioned.py        # Implémentation RDD avec partitionnement
+│   ├── pyspark_rdd.py                    # Implémentation RDD sans partitionnement
+│   ├── script_rdd_part.sh                # Script exécution RDD avec partitionnement
+│   └── script_rdd.sh                     # Script exécution RDD sans partitionnement
+└── README.md
+```
+## 1. Création d'un cluster Dataproc
+```
+gcloud dataproc clusters create pagerank-cluster-1 \
+    --enable-component-gateway \
+    --region europe-west1 \
+    --zone europe-west1-c \
+    --master-machine-type n1-standard-4 \
+    --master-boot-disk-size 500 \
+    --num-workers 4 \
+    --worker-machine-type n1-standard-4 \
+    --worker-boot-disk-size 500 \
+    --image-version 2.0-debian10 \
+    --project projectpagerank
+```
+## 2. Lancer une tâche PySpark sur le cluster
+```
+gcloud dataproc jobs submit pyspark \
+    --region europe-west1 \
+    --cluster pagerank-cluster-1 \
+    --files gs://bucket_projet_pagerank_lahad_kikia/pyspark_rdd_partitioned.py \
+    gs://bucket_projet_pagerank_lahad_kikia/pyspark_rdd_partitioned.py \
+    -- gs://bucket_projet_pagerank_lahad_kikia/page_links_en.nt.bz2 \
+    gs://bucket_projet_pagerank_lahad_kikia/out/pagerank_data_1
+```
+## 3. Suppression du cluster
+```
+gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
+```
 ## Comparaison des Performances
 
 *Les temps dexécution ont été mesurés en effectuant une moyenne sur plusieurs exécutions pour chaque configuration.*
@@ -53,15 +95,9 @@ Chaque implémentation a été testée avec et sans partitionnement d'URL (comme
 1. Living_people (38525.85)
 
 
-## Exécution du Code
 
-### Implémentation DataFrame
-```bash
-# Sans partitionnement
-./Script_pyspark_dframe.sh
 
-# Avec partitionnement
-./Script_pyspark_dframe_part.sh
+
 
 
 
