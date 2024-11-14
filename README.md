@@ -65,9 +65,9 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 |-----------------|----------------------------------|----------------------------------|---------------------------|---------------------------|
 | 2 nœuds         | 48m 10s                         | 32m 26s                         | 45m 33s                   | -                         |
 | 4 nœuds         | 32m 30s                         | 20m 8s                          | 24m 22s                   | -                         |
-
+/// Graph pour plot les res sur histogram
 ### Analyse des Performances
-
+//// Comment les res
 1. **Impact du Partitionnement (DataFrame)**
    - Sur 2 nœuds : amélioration de 32.7% (de 48m 10s à 32m 26s)
    - Sur 4 nœuds : amélioration de 38.1% (de 32m 30s à 20m 8s)
@@ -90,14 +90,19 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 ### Implémentation DataFrame
 1. Living_people (31001.24)
 
-
 ### Implémentation RDD
 1. Living_people (38525.85)
 
 
+## Exécution du Code
 
+### Implémentation DataFrame
+```bash
+# Sans partitionnement
+./Script_pyspark_dframe.sh
 
-
+# Avec partitionnement
+./Script_pyspark_dframe_part.sh
 
 
 
