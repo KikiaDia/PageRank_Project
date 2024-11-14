@@ -19,7 +19,7 @@ ZONE="europe-west1-c"
 CLUSTER_NAME="pagerank-cluster-${NUM_WORKERS}-nodes"
 INPUT_FILE="${BUCKET}/page_links_en.nt.bz2"
 OUTPUT_DIR="${BUCKET}/out/pagerank_data_1"
-NUM_WORKERS=3
+NUM_WORKERS=4
 
 echo "Démarrage du script de traitement PageRank"
 

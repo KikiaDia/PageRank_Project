@@ -185,7 +185,7 @@ def main(input_file, output_file):
 
     # Calculer le temps d'exécution en secondes
     execution_time = end_time - start_time
-    print(f"Execution time: {execution_time:.2f} seconds")
+    print(f"PageRank Execution time: {execution_time:.2f} seconds")
 
     print("Sorting results...")
     sorted_ranks = ranks.sortBy(lambda x: -x[1])
@@ -205,6 +205,13 @@ def main(input_file, output_file):
     sorted_ranks.saveAsTextFile(output_file)
 
     print(f"Total iterations completed: {progress.value}")
+
+    # Arrêter le chronomètre
+    end_time = time.time()
+
+    # Calculer le temps d'exécution en secondes
+    execution_time = end_time - start_time
+    print(f"Total Execution time: {execution_time:.2f} seconds")
 
 
     # Récupération des 5 meilleurs résultats
