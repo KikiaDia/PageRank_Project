@@ -1,4 +1,4 @@
-# PageRank Project Implementation (2024-2025)
+# Projet PageRank (2024-2025)
 ## Auteur :  `Kikia Dia | Baye Lahad Mbacke`
 
 ## Détails d'Implémentation
