@@ -95,15 +95,5 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 1. Living_people (38525.85)
 
 
-## Exécution du Code
-
-### Implémentation DataFrame
-```bash
-# Sans partitionnement
-./Script_pyspark_dframe.sh
-
-# Avec partitionnement
-./Script_pyspark_dframe_part.sh
-
 
 
