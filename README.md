@@ -24,8 +24,9 @@ Chaque implémentation a été testée avec et sans partitionnement d'URL (comme
 | 2 nœuds         | 48m 10s                         | 32m 26s                         | 45m 33s                   | -                         |
 | 4 nœuds         | 32m 30s                         | 20m 8s                          | 24m 22s                   | -                         |
 
+////// Graph to show results in histogram
 ### Analyse des Performances
-
+// We have to comment the results of the pic
 1. **Impact du Partitionnement (DataFrame)**
    - Sur 2 nœuds : amélioration de 32.7% (de 48m 10s à 32m 26s)
    - Sur 4 nœuds : amélioration de 38.1% (de 32m 30s à 20m 8s)
