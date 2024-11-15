@@ -100,10 +100,10 @@ Le graphique ci-dessus compare les performances de différentes configurations d
    - DataFrame sans partition : amélioration de 32.5% (de 48m 10s à 32m 30s)
    - DataFrame avec partition : amélioration de 37.9% (de 32m 26s à 20m 8s)
    - RDD sans partition : amélioration de 46.5% (de 45m 33s à 24m 22s)
+   - RDD avec partition : détérioration de -25.6% (de 24m 22s à 30m 37s) (La détérioration des performances des RDD avec partition (augmentation de 25,6%) est due à une gestion sous-optimale des partitions, entraînant des coûts de communication et de synchronisation élevés entre les nœuds. De plus, le partitionnement dans RDDs peut nuire à l'équilibrage des ressources, ralentissant l'exécution.)
+     
 
-4. **Comparaison DataFrame vs RDD**
-   - Sur 2 nœuds sans partition : RDD plus rapide de 5.4%
-   - Sur 4 nœuds sans partition : RDD plus rapide de 25%
+
 
 3. **Efficacité** :
    - Les deux implémentations ont montré de meilleures performances avec 4 nœuds
