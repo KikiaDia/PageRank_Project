@@ -2,9 +2,22 @@
  #########################################  PySpark DataFrame #############################################
  
   ****************Sans partition********************
+Temps d'exécution : 1 hr 56 min
+Nombre de nœuds : 1
+
++-----------------------------------------------------------------------+------------------+
+|page                                                                   |pagerank          |
++-----------------------------------------------------------------------+------------------+
+|<http://dbpedia.org/resource/Living_people>                            |31001.24788987920 |
+|<http://dbpedia.org/resource/United_States>                            |4969.822795932628 |
+|<http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29>|4080.2517530433533|
+|<http://dbpedia.org/resource/France>                                   |1949.2770799440861|
+|<http://dbpedia.org/resource/United_Kingdom>                           |1862.2523120334035|
++-----------------------------------------------------------------------+------------------+
 
 Temps d'exécution : 48 min 10 sec
 Nombre de nœuds : 2
+
 
 +-----------------------------------------------------------------------+------------------+
 |page                                                                   |pagerank          |
@@ -31,6 +44,21 @@ Nombre de nœuds : 4
 
 
   **************** Avec Partition ********************
+
+Temps d'exécution : 2h 14 min
+Nombre de nœuds : 1
+
++-----------------------------------------------------------------------+------------------+
+|page                                                                   |pagerank          |
++-----------------------------------------------------------------------+------------------+
+|<http://dbpedia.org/resource/Living_people>                            |31001.24788987920 |
+|<http://dbpedia.org/resource/United_States>                            |4969.822795932628 |
+|<http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29>|4080.2517530433533|
+|<http://dbpedia.org/resource/France>                                   |1949.2770799440861|
+|<http://dbpedia.org/resource/United_Kingdom>                           |1862.2523120334035|
++-----------------------------------------------------------------------+------------------+
+
+
 Temps d'exécution : 32 min 26 sec
 Nombre de nœuds : 2
 
@@ -61,17 +89,20 @@ Nombre de nœuds : 4
 ######################################### PySpark RDD ####################################################
 
   ****************Sans partition********************
+
+Nombre de nœuds : 1
+PageRank Execution time: 1h 15 mn
+
+Top 5 PageRanks:
+http://dbpedia.org/resource/Living_people has rank: 38525.856470
+http://dbpedia.org/resource/United_States has rank: 7267.180299
+http://dbpedia.org/resource/Year_of_birth_missing_(living_people) has rank: 4666.779197
+http://dbpedia.org/resource/United_Kingdom has rank: 2853.391435
+http://dbpedia.org/resource/France has rank: 2764.996075
   
-  
-  
-  
-  
-  
-  
- Temps d'exécution : 45 min 33 sec
+
 Nombre de nœuds : 2
-
-
+Temps d'exécution : 45 min 33 sec
 
 +-----------------------------------------------------------------------+------------------+
 |Page                                                                  |PageRank         |
@@ -82,8 +113,6 @@ Nombre de nœuds : 2
 |<http://dbpedia.org/resource/United_Kingdom>                          |2853.391435395845|
 |<http://dbpedia.org/resource/France>                                  |2764.9960745274293|
 +-----------------------------------------------------------------------+------------------+
-
-
 
 Temps d'exécution : 24 min 22 sec
 Nombre de nœuds : 4
@@ -99,5 +128,38 @@ Nombre de nœuds : 4
 +-----------------------------------------------------------------------+------------------+
 
 
+  ****************Avec partition********************
 
-  **************** Avec Partition ********************
+Nombre de nœuds : 1
+Temps d'exécution Total : 1h 10 mn
+
+Top 5 PageRanks:
+http://dbpedia.org/resource/Living_people has rank: 38525.856470
+http://dbpedia.org/resource/United_States has rank: 7267.180299
+http://dbpedia.org/resource/Year_of_birth_missing_(living_people) has rank: 4666.779197
+http://dbpedia.org/resource/United_Kingdom has rank: 2853.391435
+http://dbpedia.org/resource/France has rank: 2764.996075
+
+Nombre de nœuds : 2
+Temps d'exécution Total : 43 min 26 sec
+
+Top 5 PageRanks:
+1. <http://dbpedia.org/resource/Living_people> has rank: 38525.856470
+2. <http://dbpedia.org/resource/United_States> has rank: 7267.180299
+3. <http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29> has rank: 4666.779197
+4. <http://dbpedia.org/resource/United_Kingdom> has rank: 2853.391435
+5. <http://dbpedia.org/resource/France> has rank: 2764.996075
+
+
+
+Nombre de nœuds : 4
+Temps d'exécution Total : 30 min 37 sec
+
+Top 5 PageRanks:
+1. <http://dbpedia.org/resource/Living_people> has rank: 38525.856470
+2. <http://dbpedia.org/resource/United_States> has rank: 7267.180299
+3. <http://dbpedia.org/resource/Year_of_birth_missing_%28living_people%29> has rank: 4666.779197
+4. <http://dbpedia.org/resource/United_Kingdom> has rank: 2853.391435
+5. <http://dbpedia.org/resource/France> has rank: 2764.996075
+
+
