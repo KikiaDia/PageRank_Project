@@ -91,7 +91,7 @@ Nombre de nœuds : 4
   ****************Sans partition********************
 
 Nombre de nœuds : 1
-PageRank Execution time: 1h 15 mn
+Temps d'exécution: 1h 18 mn
 
 Top 5 PageRanks:
 http://dbpedia.org/resource/Living_people has rank: 38525.856470
