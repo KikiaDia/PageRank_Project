@@ -10,7 +10,8 @@ Chaque implémentation a été testée avec et sans partitionnement d'URL (comme
 
 ## Configuration Expérimentale
 - Source des données : `gs:///public_lddm_data/`
-- Configurations du cluster : 
+- Configurations du cluster :
+  - 1 noeud 
   - 2 nœuds
   - 4 nœuds
   - Mêmes spécifications matérielles (CPU/RAM) maintenues sur tous les nœuds pour des résultats comparables
