@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Paramètres configurables
+#Paramètres configurables
 REGION="europe-west1"
 ZONE="europe-west1-c"
 PROJECT="projectpagerank"
