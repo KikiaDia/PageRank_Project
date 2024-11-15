@@ -70,7 +70,8 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 | 2 nœuds         | 48m 10s                         | 32m 26s                         | 45m 33s                   | 43 min 26 s                        |
 | 4 nœuds         | 32m 30s                         | 20m 8s                          | 24m 22s                   | 30 min 37s                        |
 
-- /// Graph pour plot les res sur histogram 
+![performance_comparison_all_nodes](https://github.com/user-attachments/assets/f7706f76-5723-4fcd-9ebb-52576423937f)
+
 ### Analyse des Performances
  - //// Comment les res
 1. **Impact du Partitionnement (DataFrame)**
