@@ -45,6 +45,7 @@ gcloud dataproc clusters create pagerank-cluster-1 \
 ```
 ## 2. Lancer une tâche PySpark sur le cluster
 ```
+ici on teste avec le fichier:*pyspark_rdd_partitioned.py*
 gcloud dataproc jobs submit pyspark \
     --region europe-west1 \
     --cluster pagerank-cluster-1 \
