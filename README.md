@@ -72,8 +72,25 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 
 ![performance_comparison_all_nodes](https://github.com/user-attachments/assets/f7706f76-5723-4fcd-9ebb-52576423937f)
 
-### Analyse des Performances
- - //// Comment les res
+# Analyse des Performances
+
+Le graphique ci-dessus compare les performances de différentes configurations de données en fonction du nombre de nœuds et du partitionnement. Voici les points clés :
+
+## 1. Impact du Partitionnement
+
+- **Avec partition** : Les configurations avec partition (DataFrame et RDD) sont plus performantes que celles sans partition, surtout avec un nombre de nœuds élevé.
+- **Sans partition** : Les durées sont globalement plus longues, car le manque de partitionnement limite la répartition efficace des données.
+
+## 2. Comparaison entre DataFrames et RDDs
+
+- **RDDs** : Pour 1 ou 2 nœuds, les RDDs (en particulier avec partition) sont compétitifs et parfois plus rapides que les DataFrames sans partition.
+- **DataFrames avec partition** : À 4 nœuds, cette configuration offre la meilleure performance (20.13 minutes), surpassant les RDDs.
+
+## 3. Scalabilité avec le Nombre de Nœuds
+
+- **Réduction de la durée** : La durée d'exécution diminue avec l'augmentation du nombre de nœuds pour toutes les configurations, mais les configurations avec partition profitent davantage de cette scalabilité.
+- **Limite des RDDs** : La configuration "RDD avec partition" est moins performante que "DataFrame avec partition" à 4 nœuds (30.62 minutes vs. 20.13 minutes), suggérant une scalabilité inférieure pour les RDDs dans ce cas.
+
 1. **Impact du Partitionnement (DataFrame)**
    - Sur 1 nœud : amélioration de 13.4% (de 2h14m  à 1h56m )
    - Sur 2 nœuds : amélioration de 32.7% (de 48m 10s à 32m 26s)
