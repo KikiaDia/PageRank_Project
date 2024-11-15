@@ -88,7 +88,7 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 
 3. **Efficacité** :
    - Les deux implémentations ont montré de meilleures performances avec 4 nœuds
-   - Les versions partitionnées ont systématiquement surpassé les versions non partitionnées
+   - Les versions partitionnées ont systématiquement surpassé les versions non partitionnées sur le PySpark DataFrame
 
 ## Top 1 des Entités par PageRank
 
