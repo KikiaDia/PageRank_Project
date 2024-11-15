@@ -109,8 +109,8 @@ Le graphique ci-dessus compare les performances de différentes configurations d
    - Les deux implémentations ont montré de meilleures performances avec 4 nœuds
    - Les versions partitionnées ont systématiquement surpassé les versions non partitionnées sur le PySpark DataFrame
 
-4. **Resultats des PageRank pour tous les execution**
-  [Resultats execution](https://github.com/KikiaDia/PageRank_Project/blob/main/Resultats_exe.txt)
+4. **Resultats des PageRank pour tous les éxecutions**
+  [Resultats éxecutions](https://github.com/KikiaDia/PageRank_Project/blob/main/Resultats_exe.txt)
 
 
 ## Top 1 des Entités par PageRank
