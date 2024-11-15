@@ -74,15 +74,16 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 ### Analyse des Performances
  - //// Comment les res
 1. **Impact du Partitionnement (DataFrame)**
+   - Sur 1 nœud : amélioration de 13.4% (de 2h14m  à 1h56m )
    - Sur 2 nœuds : amélioration de 32.7% (de 48m 10s à 32m 26s)
    - Sur 4 nœuds : amélioration de 38.1% (de 32m 30s à 20m 8s)
 
-2. **Impact du Nombre de Nœuds**
+3. **Impact du Nombre de Nœuds**
    - DataFrame sans partition : amélioration de 32.5% (de 48m 10s à 32m 30s)
    - DataFrame avec partition : amélioration de 37.9% (de 32m 26s à 20m 8s)
    - RDD sans partition : amélioration de 46.5% (de 45m 33s à 24m 22s)
 
-3. **Comparaison DataFrame vs RDD**
+4. **Comparaison DataFrame vs RDD**
    - Sur 2 nœuds sans partition : RDD plus rapide de 5.4%
    - Sur 4 nœuds sans partition : RDD plus rapide de 25%
 
