@@ -1,5 +1,5 @@
 # PageRank Project  (2024-2025)
-## Auteur :  `Kikia Dia | Baye Lahad Mbacke`
+## Auteur :  `Kikia Dia | Baye Lahad Mbacke | TCHAMEDEU TCHAMEDEU Jordan`
 
 ## Détails d'Implémentation
 Nous avons implémenté PageRank en utilisant deux approches différentes :
