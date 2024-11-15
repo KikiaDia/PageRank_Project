@@ -65,8 +65,8 @@ gcloud dataproc clusters delete pagerank-cluster-1 --region europe-west1 --quiet
 
 | Nombre de nœuds | PySpark DataFrame sans partition | PySpark DataFrame avec partition | PySpark RDD sans partition | PySpark RDD avec partition |
 |-----------------|----------------------------------|----------------------------------|---------------------------|---------------------------|
-| 2 nœuds         | 48m 10s                         | 32m 26s                         | 45m 33s                   | -                         |
-| 4 nœuds         | 32m 30s                         | 20m 8s                          | 24m 22s                   | -                         |
+| 2 nœuds         | 48m 10s                         | 32m 26s                         | 45m 33s                   | 43 min 26 s                        |
+| 4 nœuds         | 32m 30s                         | 20m 8s                          | 24m 22s                   | 30 min 37s                        |
 
 - /// Graph pour plot les res sur histogram 
 ### Analyse des Performances
